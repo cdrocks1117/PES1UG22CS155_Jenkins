@@ -11,14 +11,14 @@ pipeline {
 
         stage('Build') {
             steps {
-                build 'PES1UG22CS5155-1'
-                sh 'g++ PES1UG22CS155-1.cpp -o PES1UG22CS155-1'
+                build 'PES1UG22CS5155'
+                sh 'g++ PES1UG22CS155.cpp -o PES1UG22CS155'
             }
         }
 
         stage('Test') {
             steps {
-                sh './PES1UG22CS155-1'
+                sh './PES1UG22CS155'
             }
         }
 
