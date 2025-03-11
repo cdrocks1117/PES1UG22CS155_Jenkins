@@ -1,37 +1,48 @@
 pipeline {
     agent any
-    stages {
-        // stage('Clone repository') {
-        //     steps {
-        //         checkout([$class: 'GitSCM',
-        //         branches: [[name: '*/main']],
-        //         userRemoteConfigs: [[url: 'https://github.com/Jatinsharma159/Jenkins.git']]])
-        //     }
-        // }
 
+    stages {
+        // Clone the repository (optional)
+        stage('Clone repository') {
+            steps {
+                checkout([$class: 'GitSCM',
+                    branches: [[name: '*/main']],
+                    userRemoteConfigs: [[url: 'https://github.com/cdrocks1117/PES1UG22CS155_Jenkins.git']]
+                ])
+            }
+        }
+
+        // Build stage
         stage('Build') {
             steps {
-                build 'PES1UG22CS5155-1'
+                echo 'Building the project...'
                 sh 'g++ PES1UG22CS155-1.cpp -o PES1UG22CS155-1'
             }
         }
 
+        // Test stage
         stage('Test') {
             steps {
+                echo 'Running tests...'
                 sh './PES1UG22CS155-1'
             }
         }
 
+        // Deploy stage
         stage('Deploy') {
             steps {
-                echo 'deploy'
+                echo 'Deploying the project...'
             }
         }
     }
 
     post {
+        success {
+            echo 'Pipeline executed successfully!'
+        }
         failure {
-            error "Pipeline failed"
+            echo 'Pipeline failed!'
+            error "Build or tests failed. Please check the logs."
         }
     }
 }
